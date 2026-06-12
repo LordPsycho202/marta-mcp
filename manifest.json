@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/mcpb/main/dist/mcpb-manifest.schema.json",
+  "manifest_version": "0.2",
+  "name": "marta-mcp",
+  "display_name": "MARTA Transit",
+  "version": "0.1.0",
+  "description": "Real-time Atlanta MARTA rail arrivals and bus positions",
+  "long_description": "Exposes Atlanta MARTA transit data as MCP tools: real-time train arrival predictions for all rail stations (RED/GOLD/BLUE/GREEN lines) and live bus vehicle positions and trip updates from MARTA's GTFS-realtime feeds. Rail data requires a free MARTA API key, read from ~/.marta/config.json or the MARTA_API_KEY environment variable.",
+  "author": {
+    "name": "Rodney Nissen"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rnissen/marta-mcp"
+  },
+  "license": "MIT",
+  "keywords": ["marta", "transit", "atlanta", "gtfs", "realtime", "trains", "buses"],
+  "server": {
+    "type": "python",
+    "entry_point": "server/main.py",
+    "mcp_config": {
+      "command": "python",
+      "args": ["${__dirname}/server/main.py"],
+      "env": {
+        "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": "python",
+        "MARTA_API_KEY": "${user_config.api_key}"
+      }
+    }
+  },
+  "user_config": {
+    "api_key": {
+      "type": "string",
+      "title": "MARTA API Key",
+      "description": "Optional. Leave blank if your key is stored in ~/.marta/config.json (recommended). Register at https://www.itsmarta.com/developer-reg-rtt.aspx",
+      "sensitive": true,
+      "required": false
+    }
+  },
+  "compatibility": {
+    "platforms": ["win32", "darwin", "linux"],
+    "runtimes": {
+      "python": ">=3.10"
+    }
+  }
+}

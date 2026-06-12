@@ -1,0 +1,26 @@
+# Build artifacts
+build/
+dist/
+*.dxt
+*.mcpb
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Never commit credentials
+*.key
+config.json
+!manifest.json
+
+# uv
+uv.lock
+
+# IDE / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
