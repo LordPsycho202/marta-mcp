@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # Build the Claude Desktop extension (.dxt / .mcpb) for marta-mcp.
-# Requires: uv, node (npx). Run from the repo root: bash scripts/build_dxt.sh
+#
+# The extension is a thin manifest-only bundle (like garmin_mcp): Claude
+# Desktop launches the server with `uvx --from git+<repo>`, which fetches
+# the package and its dependencies on first run. Users need uv installed.
+#
+# Requires: node (npx). Run from the repo root: bash scripts/build_dxt.sh
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -8,13 +13,9 @@ staging="$root/build/dxt"
 dist="$root/dist"
 
 rm -rf "$staging"
-mkdir -p "$staging/server" "$dist"
+mkdir -p "$staging" "$dist"
 
 cp "$root/manifest.json" "$staging/"
-cp "$root/scripts/dxt_main.py" "$staging/server/main.py"
-
-# Bundle marta_mcp and its dependencies into server/lib
-uv pip install --target "$staging/server/lib" "$root"
 
 # Pack with Anthropic's bundler (MCPB is the successor to DXT; Claude
 # Desktop accepts both). Produce both file extensions for convenience.

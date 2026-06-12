@@ -38,18 +38,23 @@ uvx --from git+https://github.com/LordPsycho202/marta-mcp marta-mcp-config <your
 
 ### Option 1 — Claude Desktop extension (one-click)
 
-Build (or download) `marta-mcp.dxt` / `marta-mcp.mcpb` and double-click it, or
-drag it into Claude Desktop's **Settings → Extensions**. No JSON editing needed.
+Requires [uv](https://docs.astral.sh/uv/) to be installed.
 
-Build it yourself (requires `uv` and Node.js):
+Download `marta-mcp.dxt` (or `.mcpb` — same file, newer name) from the
+[latest release](https://github.com/LordPsycho202/marta-mcp/releases) and
+double-click it, or drag it into Claude Desktop's **Settings → Extensions**.
+No JSON editing needed.
+
+The extension is a thin manifest: Claude Desktop launches the server with
+`uvx --from git+<this repo>`, fetching the package and its dependencies on
+first run — so it works on any OS and always tracks the repo's main branch.
+
+Build it yourself (requires Node.js):
 
 ```bash
 bash scripts/build_dxt.sh          # macOS / Linux
 powershell -ExecutionPolicy Bypass -File scripts\build_dxt.ps1   # Windows
 ```
-
-Output lands in `dist/`. Note: the bundle includes Python dependencies
-installed on the build machine, so build it on the same OS you'll run it on.
 
 ### Option 2 — uvx straight from GitHub
 

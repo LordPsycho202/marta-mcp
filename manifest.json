@@ -1,28 +1,34 @@
 {
-  "$schema": "https://raw.githubusercontent.com/anthropics/mcpb/main/dist/mcpb-manifest.schema.json",
-  "manifest_version": "0.2",
+  "manifest_version": "0.3",
   "name": "marta-mcp",
   "display_name": "MARTA Transit",
   "version": "0.1.0",
   "description": "Real-time Atlanta MARTA rail arrivals and bus positions",
-  "long_description": "Exposes Atlanta MARTA transit data as MCP tools: real-time train arrival predictions for all rail stations (RED/GOLD/BLUE/GREEN lines) and live bus vehicle positions and trip updates from MARTA's GTFS-realtime feeds. Rail data requires a free MARTA API key, read from ~/.marta/config.json or the MARTA_API_KEY environment variable.",
+  "long_description": "Exposes Atlanta MARTA transit data as MCP tools: real-time train arrival predictions for all rail stations (RED/GOLD/BLUE/GREEN lines) and live bus vehicle positions and trip updates from MARTA's GTFS-realtime feeds.\n\n**Requirements:** [uv](https://docs.astral.sh/uv/) must be installed — the server and its dependencies are fetched automatically on first launch.\n\n**API key:** Rail data requires a free MARTA API key, read from ~/.marta/config.json or the MARTA_API_KEY environment variable. Register at https://www.itsmarta.com/developer-reg-rtt.aspx",
   "author": {
-    "name": "Rodney Nissen"
+    "name": "Rodney Nissen",
+    "url": "https://github.com/LordPsycho202/marta-mcp"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/LordPsycho202/marta-mcp"
   },
+  "homepage": "https://github.com/LordPsycho202/marta-mcp",
   "license": "MIT",
   "keywords": ["marta", "transit", "atlanta", "gtfs", "realtime", "trains", "buses"],
   "server": {
     "type": "python",
-    "entry_point": "server/main.py",
+    "entry_point": "marta_mcp",
     "mcp_config": {
-      "command": "python",
-      "args": ["${__dirname}/server/main.py"],
+      "command": "uvx",
+      "args": [
+        "--python",
+        "3.12",
+        "--from",
+        "git+https://github.com/LordPsycho202/marta-mcp",
+        "marta-mcp"
+      ],
       "env": {
-        "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": "python",
         "MARTA_API_KEY": "${user_config.api_key}"
       }
     }
@@ -37,9 +43,6 @@
     }
   },
   "compatibility": {
-    "platforms": ["win32", "darwin", "linux"],
-    "runtimes": {
-      "python": ">=3.10"
-    }
+    "platforms": ["win32", "darwin", "linux"]
   }
 }
