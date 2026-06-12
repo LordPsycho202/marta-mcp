@@ -17,7 +17,7 @@ marta-mcp = "marta_mcp.server:main"
 marta-mcp-config = "marta_mcp.config:cli"
 
 [project.urls]
-Homepage = "https://github.com/rnissen/marta-mcp"
+Homepage = "https://github.com/LordPsycho202/marta-mcp"
 
 [dependency-groups]
 dev = [
